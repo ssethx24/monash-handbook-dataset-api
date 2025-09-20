@@ -7,7 +7,6 @@ with open("units_2025_pretty.json", "r", encoding="utf-8") as f:
     units = json.load(f)
 
 app = Flask(__name__)
-app.config["JSONIFY_PRETTYPRINT_REGULAR"] = True  # Pretty print JSON
 
 @app.route("/")
 def home():
