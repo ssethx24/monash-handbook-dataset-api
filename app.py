@@ -7,13 +7,14 @@ with open("units_2025_pretty.json", "r", encoding="utf-8") as f:
     units = json.load(f)
 
 app = Flask(__name__)
+app.config["JSONIFY_PRETTYPRINT_REGULAR"] = True  # Pretty print JSON
 
 @app.route("/")
 def home():
     return jsonify({
         "message": "Welcome to the Monash Handbook Dataset API",
         "endpoints": {
-            "/units": "Search or list all units (optional ?q= keyword to filter)",
+            "/units": "List or search units (supports ?q= keyword, ?page=, ?limit=)",
             "/units/<code>": "Get details for a specific unit by code",
             "/health": "Health check"
         }
@@ -22,6 +23,8 @@ def home():
 @app.route("/units", methods=["GET"])
 def search_units():
     q = request.args.get("q", "").lower()
+    page = int(request.args.get("page", 1))
+    limit = int(request.args.get("limit", 50))  # default 50 items per page
 
     # Filter by query if provided
     results = []
@@ -32,9 +35,17 @@ def search_units():
         if not q or q in code or q in title:
             results.append(u)
 
+    # Pagination
+    total = len(results)
+    start = (page - 1) * limit
+    end = start + limit
+    paged = results[start:end]
+
     return jsonify({
-        "totalItems": len(results),
-        "items": results
+        "totalItems": total,
+        "page": page,
+        "limit": limit,
+        "items": paged
     })
 
 @app.route("/units/<code>", methods=["GET"])
