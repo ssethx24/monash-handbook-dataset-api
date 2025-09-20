@@ -23,7 +23,7 @@ def home():
 def search_units():
     q = request.args.get("q", "").lower()
     page = int(request.args.get("page", 1))
-    limit = int(request.args.get("limit", 50))  # default 50 items per page
+    limit = int(request.args.get("limit", 6000))  # default 6000 items per page
 
     # Filter by query if provided
     results = []
