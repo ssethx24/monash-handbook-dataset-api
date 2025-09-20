@@ -1,7 +1,10 @@
+Of course 👍 here’s the updated README in proper **Markdown format** (you can copy it directly into your `README.md`):
+
+````markdown
 # 📚 Monash Handbook Dataset API
 
-This project provides a **REST API** that serves Monash University handbook unit data.
-The dataset was scraped from the official Monash Handbook and contains \~5124 units (2025 edition).
+This project provides a **REST API** that serves Monash University handbook unit data.  
+The dataset was scraped from the official Monash Handbook and contains ~5124 units (2025 edition).
 
 The API is built with **Flask (Python)** and deployed on **Render**.
 
@@ -9,8 +12,8 @@ The API is built with **Flask (Python)** and deployed on **Render**.
 
 ## 🚀 Live API Endpoint
 
-Base URL:
-**[https://monash-handbook-dataset-api.onrender.com](https://monash-handbook-dataset-api.onrender.com)**
+Base URL:  
+**[https://monash-handbook-dataset-api.onrender.com](https://monash-handbook-dataset-api.onrender.com)**  
 
 You can make requests to this URL using your browser, `curl`, Postman, or any HTTP client.
 
@@ -20,50 +23,104 @@ You can make requests to this URL using your browser, `curl`, Postman, or any HT
 
 ### 🔹 Health Check
 
-**GET /health**
+**GET /health**  
 Returns a simple status message to confirm the API is running.
 
-**Example:**
+**Example:**  
 [https://monash-handbook-dataset-api.onrender.com/health](https://monash-handbook-dataset-api.onrender.com/health)
 
 ```json
 {
   "status": "ok"
 }
-```
+````
 
 ---
 
-### 🔹 All Units
+### 🔹 List All Units (with Pagination)
 
 **GET /units**
-Returns all units in JSON format.
+Returns units in JSON format, paginated by default.
+
+Query Parameters:
+
+* `page` → page number (default = 1)
+* `limit` → number of results per page (default = 50)
 
 **Example:**
-[https://monash-handbook-dataset-api.onrender.com/units](https://monash-handbook-dataset-api.onrender.com/units)
+[https://monash-handbook-dataset-api.onrender.com/units?page=1\&limit=2](https://monash-handbook-dataset-api.onrender.com/units?page=1&limit=2)
+
+```json
+{
+  "totalItems": 5124,
+  "page": 1,
+  "limit": 2,
+  "nextPage": "https://monash-handbook-dataset-api.onrender.com/units?page=2&limit=2",
+  "prevPage": null,
+  "items": [
+    {
+      "common": {
+        "code": "FIT1045",
+        "title": "Algorithms and Programming",
+        "link": "https://handbook.monash.edu/2025/units/FIT1045"
+      }
+    },
+    {
+      "common": {
+        "code": "FIT2004",
+        "title": "Databases",
+        "link": "https://handbook.monash.edu/2025/units/FIT2004"
+      }
+    }
+  ]
+}
+```
+
+✅ The API includes `nextPage` and `prevPage` links so your app can fetch more results like Google APIs.
 
 ---
 
 ### 🔹 Search Units
 
 **GET /units?q=<keyword>**
-Filter units by keyword in code or title.
+Filter units by keyword in code or title. Works with pagination.
+
+NOTE: there are 5152 units so they dataset will load in 104 pages if the limit is set to 50. 
 
 **Example:**
-[https://monash-handbook-dataset-api.onrender.com/units?q=fit](https://monash-handbook-dataset-api.onrender.com/units?q=fit)
+[https://monash-handbook-dataset-api.onrender.com/units?q=fit\&page=1\&limit=50](https://monash-handbook-dataset-api.onrender.com/units?q=fit&page=1&limit=50)
 
 ```json
-[
-  {
-    "common": {
-      "code": "FIT3175",
-      "title": "Usability",
-      "faculty": "Faculty of Information Technology",
-      "link": "https://handbook.monash.edu/2025/units/FIT3175"
+{
+  "totalItems": 120,
+  "page": 1,
+  "limit": 3,
+  "nextPage": "https://monash-handbook-dataset-api.onrender.com/units?q=fit&page=2&limit=3",
+  "prevPage": null,
+  "items": [
+    {
+      "common": {
+        "code": "FIT3175",
+        "title": "Usability",
+        "faculty": "Faculty of IT"
+      }
     },
-    "synopsis": "This unit explores the underpinning theories, principles and practices of interface design..."
-  }
-]
+    {
+      "common": {
+        "code": "FIT2004",
+        "title": "Databases",
+        "faculty": "Faculty of IT"
+      }
+    },
+    {
+      "common": {
+        "code": "FIT1045",
+        "title": "Algorithms and Programming",
+        "faculty": "Faculty of IT"
+      }
+    }
+  ]
+}
 ```
 
 ---
@@ -126,19 +183,19 @@ Access at:
 
 ## 📦 Deployment
 
-The API is deployed on Render.
+The API is deployed on **Render**.
 Any changes pushed to the **main** branch will auto-deploy to the live API.
 
 ---
 
 ## ✨ Use Case
 
-This API can be used for:
+This API is used for:
 
 * Building a **Unit Review App** (students leave ratings/reviews for units).
 * Developing **course planning tools**.
 * Exploring **academic datasets** for research.
-* Demonstrating how to **leverage REST APIs** in assignments.
+* Demonstrating how to **leverage REST APIs** in ios applications.
 
 ---
 
@@ -146,7 +203,8 @@ This API can be used for:
 
 This project is for **educational purposes only** and is not an official Monash University service.
 
----
+```
+```
 
 
 
