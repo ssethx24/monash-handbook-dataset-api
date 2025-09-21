@@ -1,4 +1,3 @@
-Of course 👍 here’s the updated README in proper **Markdown format** (you can copy it directly into your `README.md`):
 
 ````markdown
 # 📚 Monash Handbook Dataset API
